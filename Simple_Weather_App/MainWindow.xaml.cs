@@ -22,6 +22,7 @@ namespace Simple_Weather_App
     /// </summary>
     public partial class MainWindow : Window
     {
+        ApiHandler apiHandler = new ApiHandler(Environment.GetEnvironmentVariable("API_KEY"), Environment.GetEnvironmentVariable("API_URL"));
         public MainWindow()
         {
             InitializeComponent();
@@ -30,37 +31,9 @@ namespace Simple_Weather_App
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             // Call the API here
-            await CallApiAsync();
-        }
+            await apiHandler.CallApiAsync();
+         
 
-        private async Task CallApiAsync()
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    string apiUrl = "https://api.example.com/data"; // Replace with your API endpoint URL
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-
-                        // Process the API response data here
-                        // Update your UI with the data, if necessary
-                    }
-                    else
-                    {
-                        // Handle API error here
-                        MessageBox.Show("API request failed with status code: " + response.StatusCode);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions here
-                MessageBox.Show("An error occurred: " + ex.Message);
-            }
         }
     }
 }

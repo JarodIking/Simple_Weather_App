@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Simple_Weather_App": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "API_KEY": "3cb8c5c6e624363a599bccb6dee48036",
+        "API_URL": "http://api.openweathermap.org/data/2.5/weather?lat=40.71&lon=-74.00&appid="
+      }
+    }
+  }
+}
