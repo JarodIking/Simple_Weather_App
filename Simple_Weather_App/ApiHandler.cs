@@ -34,11 +34,8 @@ namespace Simple_Weather_App
                         {
                             string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                            MessageBox.Show(jsonResponse);
-
-                            WeatherData responseData = JsonSerializer.Deserialize<WeatherData>(jsonResponse);
-
-                    }
+                            WeatherData weatherData = JsonSerializer.Deserialize<WeatherData>(jsonResponse);
+                        }
                         else
                         {
                             // Handle API error here
