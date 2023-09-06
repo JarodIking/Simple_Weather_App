@@ -29,7 +29,11 @@ namespace Simple_Weather_App
             InitializeComponent();
 
             if (Environment.GetEnvironmentVariable("API_KEY") != null)
-                apiHandler = new ApiHandler(Environment.GetEnvironmentVariable("API_KEY"), Environment.GetEnvironmentVariable("API_URL"), weatherData);
+                apiHandler = new ApiHandler(
+                        Environment.GetEnvironmentVariable("API_KEY"), 
+                        Environment.GetEnvironmentVariable("API_URL"), 
+                        weatherData
+                    );
             else
                 MessageBox.Show("no api key set");
         }
@@ -38,8 +42,6 @@ namespace Simple_Weather_App
         {
             // Call the API here
             await apiHandler.CallApiAsync();
-         
-
         }
     }
 }
