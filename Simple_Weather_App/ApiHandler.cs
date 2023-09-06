@@ -14,6 +14,7 @@ namespace Simple_Weather_App
     {
         public string ApiKey { get; set; }
         public string ApiUrl { get; set; }
+        public string Response {  get; set; }
 
         public ApiHandler(string apiKey, string apiUrl)
         {
@@ -22,34 +23,43 @@ namespace Simple_Weather_App
         }
 
         public async Task CallApiAsync()
+        {
+            try
             {
-                try
+                GetApiCall();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+        }
+
+        private async Task GetApiCall()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = ApiUrl;
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    using (HttpClient client = new HttpClient())
-                    {
-                        string apiUrl = ApiUrl;
-                        HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            string jsonResponse = await response.Content.ReadAsStringAsync();
-
-                            WeatherData weatherData = JsonSerializer.Deserialize<WeatherData>(jsonResponse);
-
-                        MessageBox.Show(weatherData.name);
-                        }
-                        else
-                        {
-                            // Handle API error here
-                            MessageBox.Show("API request failed with status code: " + response.StatusCode);
-                        }
-                    }
+                    Response = await response.Content.ReadAsStringAsync();
+                    DeserializeResponse(Response);
                 }
-                catch (Exception ex)
+                else
                 {
-                    // Handle exceptions here
-                    MessageBox.Show("An error occurred: " + ex.Message);
+                    // Handle API error here
+                    MessageBox.Show("API request failed with status code: " + response.StatusCode);
                 }
             }
         }
+
+        private void DeserializeResponse(string response)
+        {
+            WeatherData weatherData = JsonSerializer.Deserialize<WeatherData>(response);
+
+            MessageBox.Show(weatherData.name);
+        }
+    }
 }
