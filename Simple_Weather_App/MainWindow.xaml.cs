@@ -19,7 +19,10 @@ namespace Simple_Weather_App
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// TODO: Add The google geocoding API
+    /// TODO: Update interface so user can input a place
+    /// TODO: Retrieve and display weather data for said place on user interface
+   
     public partial class MainWindow : Window
     {
         public ApiHandler apiHandler;
