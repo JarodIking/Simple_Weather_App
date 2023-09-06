@@ -35,6 +35,8 @@ namespace Simple_Weather_App
                             string jsonResponse = await response.Content.ReadAsStringAsync();
 
                             WeatherData weatherData = JsonSerializer.Deserialize<WeatherData>(jsonResponse);
+
+                        MessageBox.Show(weatherData.name);
                         }
                         else
                         {
