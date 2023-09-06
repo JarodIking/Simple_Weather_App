@@ -7,6 +7,9 @@ using System.Net.Http;
 using System.Windows;
 using System.Dynamic;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
+using Newtonsoft.Json;
+using System.Security.Principal;
 
 namespace Simple_Weather_App
 {
@@ -15,20 +18,24 @@ namespace Simple_Weather_App
         private string ApiKey { get; set; }
         private string ApiUrl { get; set; }
         private string Response {  get; set; }
-        private WeatherData _weatherData {  get; set; }
+        private double Longtitude { get; set; }
+        private double Latittude { get; set; }
+        private WeatherData _weatherData { get; set; }
 
-        public ApiHandler(string apiKey, string apiUrl, WeatherData weatherData)
+        public ApiHandler(string apiKey, WeatherData weatherData)
         {
             ApiKey = apiKey;
-            ApiUrl = apiUrl + ApiKey;
             _weatherData = weatherData;
+            Latittude = 40;
+            Longtitude = -74;
+            ApiUrl = $"https://api.openweathermap.org/data/2.5/weather?lat={Latittude}&lon={Longtitude}&appid={ApiKey}";
         }
 
         public async Task CallApiAsync()
         {
             try
             {
-                GetApiCall();
+              await  GetApiCall();
             }
             catch (Exception ex)
             {
@@ -59,7 +66,21 @@ namespace Simple_Weather_App
 
         private void DeserializeResponse(string response)
         {
-            _weatherData = JsonSerializer.Deserialize<WeatherData>(response);
+            var tempWeatherData = JsonConvert.DeserializeObject<WeatherData>(response);
+            _weatherData.Coord = tempWeatherData.Coord;
+            _weatherData.Weather = tempWeatherData.Weather;
+            _weatherData.Base = tempWeatherData.Base;
+            _weatherData.Main = tempWeatherData.Main;
+            _weatherData.Visibility = tempWeatherData.Visibility;
+            _weatherData.Wind = tempWeatherData.Wind;
+            _weatherData.Rain = tempWeatherData.Rain;
+            _weatherData.Clouds = tempWeatherData.Clouds;
+            _weatherData.Dt = tempWeatherData.Dt;
+            _weatherData.Sys = tempWeatherData.Sys;
+            _weatherData.Timezone = tempWeatherData.Timezone;
+            _weatherData.Id = tempWeatherData.Id;
+            _weatherData.Name = tempWeatherData.Name;
+            _weatherData.Cod = tempWeatherData.Cod;
         }
     }
 }

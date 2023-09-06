@@ -22,16 +22,15 @@ namespace Simple_Weather_App
     /// </summary>
     public partial class MainWindow : Window
     {
-        ApiHandler apiHandler;
-        WeatherData weatherData = new WeatherData();
+        public ApiHandler apiHandler;
+        public WeatherData weatherData = new WeatherData();
         public MainWindow()
         {
             InitializeComponent();
 
-            if (Environment.GetEnvironmentVariable("API_KEY") != null)
+            if (Environment.GetEnvironmentVariable("API_WEATHER_KEY") != null)
                 apiHandler = new ApiHandler(
-                        Environment.GetEnvironmentVariable("API_KEY"), 
-                        Environment.GetEnvironmentVariable("API_URL"), 
+                        Environment.GetEnvironmentVariable("API_WEATHER_KEY"), 
                         weatherData
                     );
             else
@@ -41,7 +40,9 @@ namespace Simple_Weather_App
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             // Call the API here
-            await apiHandler.CallApiAsync();
+             await apiHandler.CallApiAsync();
+
+            MessageBox.Show(weatherData.Name);
         }
     }
 }
