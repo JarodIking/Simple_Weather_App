@@ -60,8 +60,6 @@ namespace Simple_Weather_App
         private void DeserializeResponse(string response)
         {
             _weatherData = JsonSerializer.Deserialize<WeatherData>(response);
-
-            MessageBox.Show(_weatherData.name);
         }
     }
 }
