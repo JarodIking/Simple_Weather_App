@@ -12,14 +12,16 @@ namespace Simple_Weather_App
 {
     public class ApiHandler
     {
-        public string ApiKey { get; set; }
-        public string ApiUrl { get; set; }
-        public string Response {  get; set; }
+        private string ApiKey { get; set; }
+        private string ApiUrl { get; set; }
+        private string Response {  get; set; }
+        private WeatherData _weatherData {  get; set; }
 
-        public ApiHandler(string apiKey, string apiUrl)
+        public ApiHandler(string apiKey, string apiUrl, WeatherData weatherData)
         {
             ApiKey = apiKey;
             ApiUrl = apiUrl + ApiKey;
+            _weatherData = weatherData;
         }
 
         public async Task CallApiAsync()
@@ -57,9 +59,9 @@ namespace Simple_Weather_App
 
         private void DeserializeResponse(string response)
         {
-            WeatherData weatherData = JsonSerializer.Deserialize<WeatherData>(response);
+            _weatherData = JsonSerializer.Deserialize<WeatherData>(response);
 
-            MessageBox.Show(weatherData.name);
+            MessageBox.Show(_weatherData.name);
         }
     }
 }

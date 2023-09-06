@@ -22,10 +22,16 @@ namespace Simple_Weather_App
     /// </summary>
     public partial class MainWindow : Window
     {
-        ApiHandler apiHandler = new ApiHandler(Environment.GetEnvironmentVariable("API_KEY"), Environment.GetEnvironmentVariable("API_URL"));
+        ApiHandler apiHandler;
+        WeatherData weatherData = new WeatherData();
         public MainWindow()
         {
             InitializeComponent();
+
+            if (Environment.GetEnvironmentVariable("API_KEY") != null)
+                apiHandler = new ApiHandler(Environment.GetEnvironmentVariable("API_KEY"), Environment.GetEnvironmentVariable("API_URL"), weatherData);
+            else
+                MessageBox.Show("no api key set");
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
