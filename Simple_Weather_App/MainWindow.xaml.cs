@@ -24,6 +24,7 @@ namespace Simple_Weather_App
     {
         public ApiHandler apiHandler;
         public WeatherData weatherData = new WeatherData();
+
         public MainWindow()
         {
             InitializeComponent();
